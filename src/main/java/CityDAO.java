@@ -1,3 +1,7 @@
+/*
+made by martijn de vries
+*/
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,18 +13,20 @@ public class CityDAO {
     private static CityDAO uniqueInstance = null;
     private static Connection connection = null;
 
-    private CityDAO(DBmanager db) { //precondition dbExisis()
-        if ((connection = db.getConnection()) == null) //connect to the city db
-            System.err.println(">>> CityDAO: The database doesn't exist ...");
+    //precondition if database exsists
+    private CityDAO(DBmanager db) {
+        if ((connection = db.getConnection()) == null) //connect to the city database
+            System.err.println("CityDAO: The database doesn't exist");
     }
 
-    // apply singleton design pattern to CityDao
+    // apply singleton design pattern to CityDao. singleton can be in the exam.
     public static synchronized CityDAO getInstance(DBmanager db) {
         if (uniqueInstance == null)
             uniqueInstance = new CityDAO(db);
         return uniqueInstance;
     }
 
+    //arraylist names cities
     public ArrayList<String> getCityNames(String cityName) {
         ArrayList<String> cityNames = new ArrayList<String>();
         PreparedStatement preparedStatement = null;

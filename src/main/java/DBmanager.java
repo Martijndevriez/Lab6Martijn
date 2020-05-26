@@ -1,3 +1,7 @@
+/*
+Made by Martijn de Vries
+ */
+
 import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,10 +14,11 @@ public class DBmanager {
     private static DBmanager uniqueInstance = null;
     private static Connection connection = null ;
 
+    //check if not dbexists
     private DBmanager() {
         if(!dbExists())
         {
-            System.err.println(">>> DBManager: The database doesn't exist ...") ;
+            System.err.println("DBManager: The database doesn't exist") ;
         }
     }
 
@@ -24,6 +29,7 @@ public class DBmanager {
         return uniqueInstance;
     }
 
+    //check if database use world exists
     private Boolean dbExists() {
         Boolean exists = false;
         Statement statement = null;
@@ -50,6 +56,7 @@ public class DBmanager {
         return exists;
     }
 
+    //make connection jdbc style
     public void makeConnection() {
         FileInputStream in = null;
         try{
@@ -65,7 +72,7 @@ public class DBmanager {
             connection = DriverManager.getConnection(db_url+db_params, username,
                     password);
         } catch( SQLException se ) {
-            System.err.println("Connection error....") ;
+            System.err.println("Connection error") ;
         }catch ( Exception e){
             e.printStackTrace();
         }
@@ -80,6 +87,7 @@ public class DBmanager {
         }
     }
 
+    //close connection
     public void close() {
         try {
 
